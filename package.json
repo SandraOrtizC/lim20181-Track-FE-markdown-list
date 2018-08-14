@@ -1,13 +1,28 @@
 {
-    "name": "markdownlinks",
-    "version": "1.0.0",
-    "main": "index.js",
-    "license": "MIT",
-    "scripts": {
-
-    },
-    "dependencies": {
-   
-    }
-  }
-  
+  "name": "markdown",
+  "version": "1.0.0",
+  "description": "This library analyzes the files in Markdown format, to verify the links they contain are broken or no longer valid and to inform some statistics.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .js src/ test/",
+    "pretest": "npm run eslint ",
+    "test-node": "nyc mocha ./test/md-links.spec.js",
+    "test": "npm run test-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandraortiz/lim20181-Track-FE-markdown-list.git"
+  },
+  "author": " Sandra Ortiz Cardenas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandraortiz/lim20181-Track-FE-markdown-list/issues"
+  },
+  "homepage": "https://github.com/sandraortiz/lim20181-Track-FE-markdown-list#readme",
+  "bin": "./index.js",
+  "dependencies": {},
+  "devDependencies": {}
+}
