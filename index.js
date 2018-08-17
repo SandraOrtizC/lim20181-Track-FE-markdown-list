@@ -7,18 +7,18 @@
 
 // const filemdvalidate = () => {
 
-// 	if (path.extname(`${args}`) !== '.md') {
-// 		console.log('no se pudo leer el archivo');
-// 	} 
-	
-// 	else{
-// 		const mdfile = () => {
+// 	if (path.extname(`${args}`) == '.md') {
+// 	
+//const mdfile = () => {
 // 			console.log(`${args}`);
 
 // 			fs.readFile(args[0], 'utf8', (err, buff) => {
-// 				// console.log(buff.toString());
-// 				// console.log('entre a fs');
+// 			
 // 			});
+// 	} 
+	
+// 	else{
+// 		console.log('el archivo no es markdown');	
 // 		}
 // 			mdfile();
 
@@ -29,8 +29,7 @@
 
 
 
-// // console.log(process.argv)
-// // console.log(args)
+
 
 
 
