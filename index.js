@@ -1,66 +1,30 @@
-// #!/usr/bin/env node
-// const fs = require('fs');
-// const path = require('path');
-
-
-// const [, , ...args] = process.argv
-
-// const filemdvalidate = () => {
-
-// 	if (path.extname(`${args}`) == '.md') {
-// 	
-//const mdfile = () => {
-// 			console.log(`${args}`);
-
-// 			fs.readFile(args[0], 'utf8', (err, buff) => {
-// 			
-// 			});
-// 	} 
-	
-// 	else{
-// 		console.log('el archivo no es markdown');	
-// 		}
-// 			mdfile();
-
-// 	} 
-// }
-// filemdvalidate()
-
-
-
-
-
-
-
-
-	
-
-let klaw = require('klaw'),
-path = require('path'),
-through2 = require('through2'),
-dir_walk = process.argv[2] || process.cwd();
- 
-// lets klaw
-klaw(dir_walk)
- 
-// only html
-.pipe(through2.obj(function (item, enc, next) {
- 
-        let ext = path.extname(item.path);
- 
-        if (ext.toLowerCase() === '.md' || ext.toLowerCase() === '.md') {
- 
-            this.push(item);
- 
+#!/usr/bin/env node
+const fs = require('fs');
+const [, , ...args] = process.argv
+const path = require('path');
+const filemdvalidate = () => {
+    if (path.extname(`${args}`) == '.md') {
+        const mdfile = () => {
+            // console.log(`${args}`);
+            fs.readFile(args[0], 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(data.toString());
+                }
+            });
         }
- 
-        next();
- 
-    }))
- 
-// for each item that remains
-.on('data', function (item) {
- 
-    console.log(item.path);
- 
-});
+        mdfile();
+// 
+    }
+    else {
+        console.log('el archivo no es markdown');
+    }
+
+}
+filemdvalidate()
+
+
+
+
+
