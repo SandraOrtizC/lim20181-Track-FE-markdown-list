@@ -2,47 +2,51 @@
 const fs = require('fs');
 const [, , ...args] = process.argv
 // var showdown = require('showdown')
-const path = require('path');
+// const path = require('path');
 // const options = {
   // validate 
   // stats
 // // }
-// const mdlinks = (args , options) => {}
-fs.stat(args[0] , (err, stat) => {
- if (stat.isFile())
-  {
-    console.log(args[0])
-    console.log(path.resolve(args[0]));
+// mdlinks = (pathS ) => {
+// fs.stat(pathS , (err, stat) => {
+//  if (stat.isFile())
+//   {
+//     console.log(pathS)
+//     console.log(path.resolve(pathS));
     
-  } 
-else if (stat.isDirectory()) {
+//   } 
+// else if (stat.isDirectory()) {
   // console.log(args[0] , "hola")   
-  // console.log(path.resolve(args[0]));
-  fs.readdir(args[0], function(err, items) {
-    console.log(items);
+  // console.log(path.resolve(pathS));
+//   fs.readdir(pathS, function(err, items) {
+//     console.log(items);
  
-    for (var i=0; i<items.length; i++) {
-        console.log(items[i]);
-    }
-})
+//     for (var i=0; i<items.length; i++) {
+//         console.log(items[i]);
+//     }
+// })
 
-}
-})
-    
+// }
+// })
+//   }  
+
+  // module.exports = mdlinks;
    
-  
+  var markdown = require( "markdown" ).markdown;
+// console.log( markdown.toHTML( "Hello *World*!" ) );
+
     // if (path.extname(`${args}`) === '.md') {
     //     const mdfile = () => {
-    //         fs.readFile(args[0], 'utf8', (err, data) => {
-    //             if (err) {
-    //                 console.log(err);
-    //             }
-    //             else {
-    //                 converter = new showdown.Converter()
-    //                 html = converter.makeHtml(data);
-    //                 console.log(html);
-    //             }
-    //         });
+            fs.readFile(args[0], 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                //  console.log( markdown.toHTML( data ) );
+                 console.log(typeof( markdown.toHTML( data )));
+                 
+                }
+           });
     //     }
     //     mdfile();
     // }
