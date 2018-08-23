@@ -6,6 +6,13 @@
   "directories": {
     "test": "test"
   },
+  "dependencies": {
+    "klaw": "^3.0.0",
+    "markdown": "^0.5.0",
+    "showdown": "^1.8.6",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,15 +25,5 @@
   "bugs": {
     "url": "https://github.com/sandraortiz/lim20181-Track-FE-markdown-list/issues"
   },
-  "homepage": "https://github.com/sandraortiz/lim20181-Track-FE-markdown-list#readme",
-  "bin": {
-    "mdlinks": "index.js"
-  },
-  "dependencies": {
-    "klaw": "^3.0.0",
-    "markdown": "^0.5.0",
-    "remarkable": "^1.7.1",
-    "showdown": "^1.8.6",
-    "through2": "^2.0.3"
-  }
+  "homepage": "https://github.com/sandraortiz/lim20181-Track-FE-markdown-list#readme"
 }
