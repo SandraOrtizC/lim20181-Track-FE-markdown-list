@@ -1,20 +1,10 @@
 #!/usr/bin/env node
 const fs = require('fs');
-const [, , ...args] = process.argv
 const path = require('path');
+
+const [, , ...args] = process.argv
 const route = args[0]
-const filemd = [];
-// const fileordirectory = () => {
-//   fs.stat(paths, (err, stat) => {
-//     if (stat.isFile()) {
-//       readFile(paths)
-//     }
-//     else if (stat.isDirectory()) {
-//       console.log('es una carpeta')
-//       readFolder(paths);
-//     }
-//   })
-// }
+
 const mdlinks = () => {
   return new Promise((resolve, reject) => {
     fs.stat(route, (err, stat) => {
@@ -26,9 +16,9 @@ const mdlinks = () => {
       }
     })
   })
- }
+}
 mdlinks()
-module.exports = mdlinks
+
 const readFolder = (currentPath) => {
   const files = fs.readdirSync(currentPath);
   for (let i in files) {
@@ -44,24 +34,23 @@ const readFolder = (currentPath) => {
 };
 const readFile = (currentFile) => {
   if (path.extname(currentFile) === '.md') {
-    const fileMd = path.basename(currentFile)
-    filemd.push(fileMd)
-    filemd.map(file => readfiles(file))
+    readfilesmd(currentFile)
   }
 }
-const readfiles = (files) => {
+const readfilesmd = (files) => {
+  
   fs.readFile(files, 'utf8', (err, data) => {
+  const  array = []
     if (err) {
       console.log(err);
     }
     else {
-      let result = data.match(/(?:__|[])|\[(.*?)\]\(.*?\)/gm);
-      console.log(result);
+    let result = data.match(/(?:__|[])|\[(.*?)\]\(.*?\)/g);
+    array.push(result)
+     console.log(array);
     }
   });
 }
-
-
 
 
 
