@@ -2,59 +2,51 @@
 const fs = require('fs');
 const [, , ...args] = process.argv
 const path = require('path');
-// const options = {
-// validate 
-// stats
-// // }
+const paths = args[0]
+const filemd = [];
+const readFolder = (currentPath) => {
+  const files = fs.readdirSync(currentPath);
+  for (let i in files) {
+    let currentFile = currentPath + '/' + files[i];
+    let stats = fs.statSync(currentFile);
+    if (stats.isFile()) {
+      readFile(currentFile)
+    }
+    else if (stats.isDirectory()) {
+      readFolder(currentFile);
+    }
+  }
+};
+const readFile = (currentFile) => {
+  if (path.extname(currentFile) === '.md') {
+    const fileMd = path.basename(currentFile)
+    filemd.push(fileMd)
+    console.log(filemd);
+  }
 
-// mdlinks = (pathS ) => {
-// fs.stat(pathS , (err, stat) => {
-//  if (stat.isFile()  )
-//   {
-//     console.log(pathS)
-//     console.log(path.resolve(pathS));
-//   } 
-// else if (stat.isDirectory()) {
-// console.log(args[0] , "hola")   
-// console.log(path.resolve(pathS));
-//   fs.readdir(pathS, function(err, items) {
-//     console.log(items);
-//     for (var i=0; i<items.length; i++) {
-//         console.log(items[i]);
-//     }
-// })
-// }
-// })
-//   }  
-
-// module.exports = mdlinks;
-if (path.extname(`${args}`) === '.md') 
-{
-   const mdfile = () => {
-fs.readFile(args[0], 'utf8', (err, data) => {
-  if (err) {
-    console.log(err);
+}
+const fileordirectory = () => {
+  fs.stat(paths, (err, stat) => {
+    if (stat.isFile()) {
+      readFile(paths)
+    }
+    else if (stat.isDirectory()) {
+      console.log('es una carpeta')
+      readFolder(paths);
+    }
+  })
+}
+const extraerlinks = () => { }
+const mdlinks = () => {
+  if (path.isAbsolute(paths)) {
+    fileordirectory()
   }
   else {
-    let result = data.match(/(?:__|[])|\[(.*?)\]\(.*?\)/gm);
-    console.log(result);
+  fileordirectory()
   }
-});
-      } 
-      mdfile(); 
-    }
-else {
-       console.log('el archivo no es markdown');
-    }
 
-
-
-
-  
-
-
-
-
+}
+mdlinks()
 
 
 
