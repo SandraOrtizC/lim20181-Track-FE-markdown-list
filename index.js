@@ -1,58 +1,30 @@
-#!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch')
+///(\b(http?|https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig; solo la url
+const results = [];
+const mdlinks = (route, options) => {
+    return new Promise((resolve, reject) => {
+        fs.stat(route, (err, stat) => {
+            if (err) return reject(err.code);
+            if (stat.isFile()) {
+                // readFile(route , (err , links) =>{
+                //          if (err) return reject(err.code);
+                // //    return resolve(selectOptions(links, options)); 
+                // } )
+            return resolve(results)
+            }
+            else if (stat.isDirectory()) {
+                
+            return resolve(results)
+                // readFolder()
+                //   readFolder(route, (err, links) => {
+                //     if (err) return reject(err.code);
+                //         // return resolve(links);
+                //   })
+            }
+        })
 
-const [, , ...args] = process.argv
-const route = args[0]
-
-const mdlinks = () => {
-  return new Promise((resolve, reject) => {
-    fs.stat(route, (err, stat) => {
-      if (stat.isFile()) {
-        readFile(route)
-      }
-      else {
-        readFolder(route)
-      }
-    })
-  })
+    });
 }
-mdlinks()
-
-const readFolder = (currentPath) => {
-  const files = fs.readdirSync(currentPath);
-  for (let i in files) {
-    let currentFile = currentPath + '/' + files[i];
-    let stats = fs.statSync(currentFile);
-    if (stats.isFile()) {
-      readFile(currentFile)
-    }
-    else if (stats.isDirectory()) {
-      readFolder(currentFile);
-    }
-  }
-};
-const readFile = (currentFile) => {
-  if (path.extname(currentFile) === '.md') {
-    readfilesmd(currentFile)
-  }
-}
-const readfilesmd = (files) => {
-  
-  fs.readFile(files, 'utf8', (err, data) => {
-  const  array = []
-    if (err) {
-      console.log(err);
-    }
-    else {
-    let result = data.match(/(?:__|[])|\[(.*?)\]\(.*?\)/g);
-    array.push(result)
-     console.log(array);
-    }
-  });
-}
-
-
-
-
-
+module.exports = mdlinks;
