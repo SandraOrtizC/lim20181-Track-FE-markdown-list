@@ -1,24 +1,27 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
+const marked = require('marked');
 
 const [, , ...args] = process.argv
 const route = args[0]
 
 const mdlinks = () => {
-  return new Promise((resolve, reject) => {
+  // return new Promise((resolve, reject) => {
     fs.stat(route, (err, stat) => {
+
       if (stat.isFile()) {
+
         readFile(route)
       }
       else {
         readFolder(route)
       }
     })
-  })
+  // })
 }
 mdlinks()
-
 const readFolder = (currentPath) => {
   const files = fs.readdirSync(currentPath);
   for (let i in files) {
@@ -38,21 +41,37 @@ const readFile = (currentFile) => {
   }
 }
 const readfilesmd = (files) => {
-  
   fs.readFile(files, 'utf8', (err, data) => {
-  const  array = []
-    if (err) {
-      console.log(err);
-    }
-    else {
-    let result = data.match(/(?:__|[])|\[(.*?)\]\(.*?\)/g);
-    array.push(result)
-     console.log(array);
-    }
+    const result = data.match(/(https?:\/\/).([a-z\.]{2,6})([\/\w \.-]*)[^images\.]/g)
+    console.log(result);
+   // if(result !=null) {
+    //   for (let i = 0; i <result.length; i++) {
+    //   const element = result[i];
+    //   // console.log(element);
+    //   const arrLinks = [];
+    //   const render = new marked.Renderer()
+    // render.element = (href, title, text) => {
+    //    if (href != text) {
+    //       arrLinks.push({
+    //         href: href,
+    //         text: text,
+    //         file: files,
+    //       })
+          
+    //       // console.log(arrLinks);
+    //     }
+    //     else{
+    //       console.log('hola');
+          
+    //     }
+    //       console.log(arrLinks);
+    //   }
+      
+    // }}
+    
   });
+
 }
-
-
 
 
 

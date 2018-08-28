@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "marked": "^0.5.0",
     "node-fetch": "^2.2.0"
   },
   "devDependencies": {},
