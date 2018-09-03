@@ -1,77 +1,83 @@
-#!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');
 const marked = require('marked');
+const fetch = require('node-fetch');
 
-const [, , ...args] = process.argv
-const route = args[0]
-
-const mdlinks = () => {
-  // return new Promise((resolve, reject) => {
-    fs.stat(route, (err, stat) => {
-
-      if (stat.isFile()) {
-
-        readFile(route)
-      }
-      else {
-        readFolder(route)
-      }
-    })
-  // })
+const uniqueLinks = (links) => {
+    return [...new Set(links)];
 }
-mdlinks()
-const readFolder = (currentPath) => {
-  const files = fs.readdirSync(currentPath);
-  for (let i in files) {
-    let currentFile = currentPath + '/' + files[i];
-    let stats = fs.statSync(currentFile);
+const validarStatus = (links) => {
+    return fetch(links.href)
+        .then(response => {
+            links.status = res.status;
+            links.statusText = res.statusText;
+            return links
+        })
+        .catch(err => {
+            links.codeError = err.code;
+            return links
+        })
+}
+ const linksInfo = []
+const linkContent = (routeAbsolute) => {
+
+    const datalink = fs.readFileSync(routeAbsolute, 'utf8');
+    const renderer = new marked.Renderer();
+    renderer.link = (href, route, text) => {
+        linksInfo.push({ href, text, route: routeAbsolute });
+    };
+    marked(datalink, { renderer });
+    return linksInfo
+    
+}
+
+
+
+
+const checkFileMd = (file) => {
+    if (path.extname(file) === '.md') {
+        return file;
+    }
+};
+
+const readFileOrDirectory = (routeAbsolute) => {
+    const stats = fs.statSync(routeAbsolute)
     if (stats.isFile()) {
-      readFile(currentFile)
+        if (checkFileMd(routeAbsolute)) {
+            linkContent(routeAbsolute)
+        }
     }
     else if (stats.isDirectory()) {
-      readFolder(currentFile);
+        let files = fs.readdirSync(routeAbsolute);
+        files.map((file) => {
+            readFileOrDirectory(routeAbsolute + '/' + file);
+        });
     }
-  }
-};
-const readFile = (currentFile) => {
-  if (path.extname(currentFile) === '.md') {
-    readfilesmd(currentFile)
-  }
-}
-const readfilesmd = (files) => {
-  fs.readFile(files, 'utf8', (err, data) => {
-    const result = data.match(/(https?:\/\/).([a-z\.]{2,6})([\/\w \.-]*)[^images\.]/g)
-    console.log(result);
-   // if(result !=null) {
-    //   for (let i = 0; i <result.length; i++) {
-    //   const element = result[i];
-    //   // console.log(element);
-    //   const arrLinks = [];
-    //   const render = new marked.Renderer()
-    // render.element = (href, title, text) => {
-    //    if (href != text) {
-    //       arrLinks.push({
-    //         href: href,
-    //         text: text,
-    //         file: files,
-    //       })
-          
-    //       // console.log(arrLinks);
-    //     }
-    //     else{
-    //       console.log('hola');
-          
-    //     }
-    //       console.log(arrLinks);
-    //   }
-      
-    // }}
-    
-  });
-
 }
 
 
 
+const mdlinks = (route, options) => {
+    return new Promise((resolve, reject) => { 
+       options.validate = false
+       options.stats = false
+  if (fs.existsSync(route)) {
+      const routeAbsolute = path.resolve(route)
+      if (!options.validate && !options.stats) {
+        readFileOrDirectory (routeAbsolute)
+          linksInfo.map(link => {
+            console.log(`${link.route}\t${link.href}\tLink a\t${link.text}\r\n`);
+           })
+          }
+        else if(options.validate === true && options.stats===undefined) {
+            readFileOrDirectory (routeAbsolute)
+            linksInfo.map(link => {
+              console.log(`${link.route}\t${link.href}`);
+             })
+        }
+
+}
+})
+}
+
+module.exports = mdlinks;
