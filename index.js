@@ -55,11 +55,7 @@ const mdLinks = (route, options) => {
       const routaAbsolute = path.resolve(route)
       const read = readFileOrDirectory(routaAbsolute)
       const array = searchLink(read)
-
-      if (!options.stats && !options.validate) {
-        resolve(array)
-      }
-      else if (options.stats && options.validate) {
+      if (options.stats && options.validate) {
         validarStatus(array)
           .then((respuesta) => {
             resolve([{
@@ -82,6 +78,10 @@ const mdLinks = (route, options) => {
               unique: arrayUniques(respuesta.map(link => link.href)).length
             }])
           });
+      }
+      else {
+        resolve(array)
+    
       }
     }
   })
