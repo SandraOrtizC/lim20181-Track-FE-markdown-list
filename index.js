@@ -41,7 +41,7 @@ const readFileOrDirectory = (routeAbsolute) => {
 if (stats.isFile() && path.extname(routeAbsolute) === '.md') {
     arrfiles.push(routeAbsolute);
   }
-  else if (stats.isDirectory()) {
+  else  {
     const files = fs.readdirSync(routeAbsolute);
     files.forEach(file => {
       arrfiles = arrfiles.concat(readFileOrDirectory(path.join(routeAbsolute, file)));

@@ -77,7 +77,7 @@ test('debería retornar un array de objetos con la propiedad href, text y path ,
 
     })
 })
-test('debería retornar un array de objetos con la propiedad total, unicos', () => {
+test('debería retornar un array con un objeto con  la propiedad total, unicos', () => {
   options.stats = true
   options.validate = false
   return mdlinks('test/testarchivos', options)
@@ -88,7 +88,7 @@ test('debería retornar un array de objetos con la propiedad total, unicos', () 
 
     })
 })
-test('debería retornar un array de objetos con la propiedad total, unicos y link rotos', () => {
+test('debería retornar un array con un objeto  con la propiedad total, unicos y link rotos', () => {
   options.stats = true
   options.validate = true
   return mdlinks('test/testarchivos', options)
@@ -99,10 +99,10 @@ test('debería retornar un array de objetos con la propiedad total, unicos y lin
 
     })
 })
-test('mdlinks', () => {
+test('comprueba si mdlinks retorna un promesa que se resuelve con  un array de objetos ', () => {
   return expect(mdlinks('test/testarchivos', options)).toBeInstanceOf(Promise);
 });
-test('the data is peanut butter', () => {
+test('si la ruta  pasada no exite deberia rechazar la promesa', () => {
   expect.assertions(1);
   return expect(mdlinks('test/test', options)).rejects.toMatch('la ruta no es valida');
 });
