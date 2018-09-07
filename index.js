@@ -81,7 +81,6 @@ const mdLinks = (route, options) => {
       }
       else {
         resolve(array)
-    
       }
     }
   })
