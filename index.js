@@ -17,6 +17,7 @@ const validarStatus = (arrLinks) => {
     })
 }
 
+
 const searchLink = (resultado) => {
   const links = [];
   resultado.forEach(file => {

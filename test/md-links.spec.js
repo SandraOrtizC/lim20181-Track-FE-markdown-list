@@ -5,6 +5,7 @@ let options = {
   stats: false
 }
 
+
 test('debería retornar un array de objetos con la propiedad href, text y path', () => {
   return mdlinks('test/testarchivos', options)
     .then(arraylinks => {

@@ -18,28 +18,27 @@ program
         mdLinks(route, options)
             .then(array => {
                 if (!options.stats && !options.validate) {
-                    array.forEach(linksData => {
-                        console.log(`${linksData.file}\t ${linksData.href}\t ${linksData.text}`);
+                    array.forEach(linksinfo => {
+                        console.log(`${linksinfo.file}\t ${linksinfo.href}\t ${linksinfo.text}`);
+                    });
+                }
+                else if (options.stats && options.validate) {
+                    array.forEach(linksinfo => {
+                        console.log(`total:${linksinfo.total}\nunique:${linksinfo.unique}\nbroken:${linksinfo.broken}`)
+                    });
+                }
+                else if (options.validate == true) {
+                    array.forEach(linksinfo => {
+                        console.log(`${linksinfo.file}\t ${linksinfo.href}\t ${linksinfo.status}\t${linksinfo.statusText}`);
+                    });
+                }
+                else if (options.stats == true) {
+                    array.forEach(linksinfo => {
+                        console.log(`total:${linksinfo.total}\nunique:${linksinfo.unique}`)
                     });
                 }
 
-                else if (options.stats && options.validate){
-                    array.forEach(linksData => {
-                        console.log(`total:${linksData.total}\nunique:${linksData.unique}\nbroken:${linksData.broken}`)
-                   });
-                }
-               else if(options.validate == true) {
-                    array.forEach(linksData => {
-                        console.log(`${linksData.file}\t ${linksData.href}\t ${linksData.status}\t${linksData.statusText}`);
-                    });
-                }
-               else if(options.stats == true ) {
-                    array.forEach(linksData => {
-                         console.log(`total:${linksData.total}\nunique:${linksData.unique}`)
-                    });
-                }
-                
-            
+
             })
     })
     .parse(process.argv);
