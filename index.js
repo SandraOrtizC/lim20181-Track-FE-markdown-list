@@ -38,7 +38,7 @@ const searchLink = (resultado) => {
 const readFileOrDirectory = (routeAbsolute) => {
   let arrfiles = [];
   const stats = fs.statSync(routeAbsolute)
-  if (stats.isFile() && path.extname(routeAbsolute) === '.md') {
+if (stats.isFile() && path.extname(routeAbsolute) === '.md') {
     arrfiles.push(routeAbsolute);
   }
   else if (stats.isDirectory()) {
@@ -83,6 +83,9 @@ const mdLinks = (route, options) => {
       else {
         resolve(array)
       }
+    }
+    else{
+      reject('la ruta no es valida')
     }
   })
 }
