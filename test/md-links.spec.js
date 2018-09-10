@@ -15,7 +15,7 @@ test('debería retornar un array de objetos con la propiedad href, text y path',
       {
         href: 'https://nodejs.org/',
         text: 'Node.js',
-        file:'C:\\Users\\sandraortiz\\Documents\\proyectos laboratoria\\lim20181-Track-FE-markdown-list\\test\\testarchivos\\1.md'
+        file: 'C:\\Users\\sandraortiz\\Documents\\proyectos laboratoria\\lim20181-Track-FE-markdown-list\\test\\testarchivos\\1.md'
       },
       {
         href: 'http://algo.com/2/3/',
@@ -34,11 +34,11 @@ test('debería retornar un array de objetos con la propiedad href, text y path',
       }])
     })
 })
-test('deberia retornar la ruta del archivo mas no es archivo markdown' , () => {
+test('deberia retornar la ruta del archivo mas no es archivo markdown si pasa un archivo que no es markdown', () => {
   return mdlinks('test/md-links.spec.js', options)
-toEqual('C:\Users\sandraortiz\Documents\proyectos laboratoria\lim20181-Track-FE-markdown-list\test\md-links.spec.jsno es archivo markdown'  )
-    
-  
+  toEqual('C:\Users\sandraortiz\Documents\proyectos laboratoria\lim20181-Track-FE-markdown-list\test\md-links.spec.jsno es archivo markdown')
+
+
 })
 test('debería retornar un array de objetos con la propiedad href, text y path , status , status text', () => {
   options.validate = true
@@ -76,7 +76,7 @@ test('debería retornar un array de objetos con la propiedad href, text y path ,
       {
         href: 'https://developers.google.com/v8/',
         text: 'motor de JavaScript V8 de Chrome',
-        file:'C:\\Users\\sandraortiz\\Documents\\proyectos laboratoria\\lim20181-Track-FE-markdown-list\\test\\testarchivos\\1.md',
+        file: 'C:\\Users\\sandraortiz\\Documents\\proyectos laboratoria\\lim20181-Track-FE-markdown-list\\test\\testarchivos\\1.md',
         status: 200,
         statusText: 'OK'
       }])

@@ -4,23 +4,22 @@ const marked = require('marked');
 const fetch = require('node-fetch');
 const arrayUniques = require('array-unique');
 
-const validarStatus = (arrLinks) => {
-  const arrayDePromises = arrLinks.map(link => fetch(link));
+const validarStatus = (arrayLinks) => {
+  const arrayDePromises = arrayLinks.map(link => fetch(link));
   return Promise.all(arrayDePromises)
     .then(response => {
-      const links = arrLinks.map((objRespuesta, statuslink) => {
-        objRespuesta.status = response[statuslink].status;
-        objRespuesta.statusText = response[statuslink].statusText;
-        return objRespuesta;
+      const links = arrayLinks.map((objAnswer, statuslink) => {
+        objAnswer.status = response[statuslink].status;
+        objAnswer.statusText = response[statuslink].statusText;
+        return objAnswer;
       });
       return links;
     })
 }
 
-
-const searchLink = (resultado) => {
+const searchLink = (arrayFiles) => {
   const links = [];
-  resultado.forEach(file => {
+  arrayFiles.forEach(file => {
     const data = fs.readFileSync(file, 'utf8');
     const renderer = new marked.Renderer();
     renderer.link = (href, title, text) => {
@@ -53,44 +52,44 @@ const readFileOrDirectory = (routeAbsolute) => {
   return arrfiles;
 }
 
-const mdLinks = (route, options) => {
-  return new Promise((resolve, reject) => {
+const mdLinks = (route, options) => 
+  new Promise((resolve, reject) => {
     if (fs.existsSync(route)) {
-      const routaAbsolute = path.resolve(route)
-      const read = readFileOrDirectory(routaAbsolute)
-      const array = searchLink(read)
+      const routeAbsolute = path.resolve(route)
+      const FileOrDirectory = readFileOrDirectory(routeAbsolute)
+      const arrayLinksInfo = searchLink(FileOrDirectory)
       if (options.stats && options.validate) {
-        validarStatus(array)
-          .then((respuesta) => {
+        validarStatus(arrayLinksInfo)
+          .then((response) => {
             resolve([{
-              total: respuesta.map(link => link.href).length,
-              broken: respuesta.filter(link => link.status == 404).length,
-              unique: arrayUniques(respuesta.map(link => link.href)).length
+              total: response.map(link => link.href).length,
+              broken: response.filter(link => link.status == 404).length,
+              unique: arrayUniques(response.map(link => link.href)).length
             }])
 
           });
       }
       else if (options.validate === true) {
-        validarStatus(array)
-          .then((respuesta) => { resolve(respuesta) });
+        validarStatus(arrayLinksInfo)
+          .then((response) => {resolve(response)});
       }
       else if (options.stats === true) {
-        validarStatus(array)
-          .then((respuesta) => {
+        validarStatus(arrayLinksInfo)
+          .then((response => {
             resolve([{
-              total: respuesta.map(link => link.href).length,
-              unique: arrayUniques(respuesta.map(link => link.href)).length
+              total: response.map(link => link.href).length,
+              unique: arrayUniques(response.map(link => link.href)).length
             }])
-          });
+          }));
       }
       else {
-        resolve(array)
+        resolve(arrayLinksInfo)
       }
     }
     else {
       reject('la ruta no es valida')
     }
   })
-}
+
 
 module.exports = mdLinks;
