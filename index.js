@@ -38,10 +38,13 @@ const searchLink = (resultado) => {
 const readFileOrDirectory = (routeAbsolute) => {
   let arrfiles = [];
   const stats = fs.statSync(routeAbsolute)
-if (stats.isFile() && path.extname(routeAbsolute) === '.md') {
+  if (stats.isFile() && path.extname(routeAbsolute) === '.md') {
     arrfiles.push(routeAbsolute);
   }
-  else  {
+  else if (stats.isFile() && path.extname(routeAbsolute) !== '.md') {
+    console.log(routeAbsolute + 'no es archivo markdown');
+  }
+  else {
     const files = fs.readdirSync(routeAbsolute);
     files.forEach(file => {
       arrfiles = arrfiles.concat(readFileOrDirectory(path.join(routeAbsolute, file)));
@@ -84,7 +87,7 @@ const mdLinks = (route, options) => {
         resolve(array)
       }
     }
-    else{
+    else {
       reject('la ruta no es valida')
     }
   })

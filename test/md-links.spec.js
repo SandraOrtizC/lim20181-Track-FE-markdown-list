@@ -34,6 +34,12 @@ test('debería retornar un array de objetos con la propiedad href, text y path',
       }])
     })
 })
+test('deberia retornar la ruta del archivo mas no es archivo markdown' , () => {
+  return mdlinks('test/md-links.spec.js', options)
+toEqual('C:\Users\sandraortiz\Documents\proyectos laboratoria\lim20181-Track-FE-markdown-list\test\md-links.spec.jsno es archivo markdown'  )
+    
+  
+})
 test('debería retornar un array de objetos con la propiedad href, text y path , status , status text', () => {
   options.validate = true
   return mdlinks('test/testarchivos', options)
